@@ -1,0 +1,31 @@
+﻿@model LoginFormClass
+
+@{
+    ViewData["Title"] = "Login";
+
+    LoginFormClass login = Model;
+ 
+}
+
+<div class="container my-16 ">
+    <div class="mx-10">
+        <h2 class="text-3xl font-semibold">Login</h2>
+        <p class="opacity-50 text-xs mb-4 mt-1">If you don't have an account please contact your administrator <a class="text-primary" href="mailto:support@schoolname.edu">support@schoolname.edu</a></p>
+        <form asp-controller="Authentication" asp-action="LoginSave" method="post" class="w-full mt-4 max-w-xl validateForm">
+            <div>
+                <label for="email">E-mail</label>
+                <input asp-for="Email" type="email" name="email" placeholder="yourname@schoolname.edu" required class="w-full border-gray-300 rounded-md mt-2">
+            </div>
+            <div class="mt-4">
+                <label for="password" name="password">Password</label>
+                <input asp-for="Password" type="password" minlength="8" name="password" placeholder="********" required class="w-full border-gray-300 rounded-md mt-2">
+            </div>
+            <button class="mt-6 border border-primary text-white bg-primary py-2 px-4 rounded-md transition-colors hover:bg-white hover:text-primary">
+                Login
+            </button>
+        </form>
+        <p class="mt-4">
+            Having trouble signing in? <a asp-controller="authentication" asp-action="forgot-password" class="text-primary"> Reset your password</a>
+        </p>
+    </div>
+</div>
