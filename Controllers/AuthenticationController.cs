@@ -12,16 +12,16 @@ public class AuthenticationController : Controller
     }
 
     [Route("authentication/login")]
-    public IActionResult Login()
+    public IActionResult Login() 
     {
         return View();
     }
 
     [Route("authentication/login")]
     [HttpPost]
-    public IActionResult LoginSave(LoginFormClass Login)
+    public IActionResult LoginSave(string email, string password)
     {
-        ViewData.Model = Login;
+        TempData["email"] = email;
         return View("~/Views/Authentication/login.cshtml", Login);
     }
 
