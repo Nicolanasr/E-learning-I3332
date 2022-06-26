@@ -1,9 +1,11 @@
 ﻿@{
     ViewData["Title"] = "Login";
+    string returnUrl = TempData["ReturnUrl"] as string;
 
     <p>
-        @TempData["email"]
+        @TempData["error"]
     </p>
+
 }
 
 <div class="container my-16 ">
@@ -11,6 +13,7 @@
         <h2 class="text-3xl font-semibold">Login</h2>
         <p class="opacity-50 text-xs mb-4 mt-1">If you don't have an account please contact your administrator <a class="text-primary" href="mailto:support@schoolname.edu">support@schoolname.edu</a></p>
         <form asp-controller="Authentication" asp-action="LoginSave" method="post" class="w-full mt-4 max-w-xl validateForm">
+            <input type="text" name="ReturnUrl" value="@returnUrl" required hidden>
             <div>
                 <label for="email">E-mail</label>
                 <input type="email" name="email" placeholder="yourname@schoolname.edu" required class="w-full border-gray-300 rounded-md mt-2">

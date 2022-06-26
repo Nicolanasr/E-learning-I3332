@@ -773,9 +773,6 @@ select {
 .hidden {
   display: none;
 }
-.h-full {
-  height: 100%;
-}
 .h-14 {
   height: 3.5rem;
 }

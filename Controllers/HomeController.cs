@@ -1,22 +1,16 @@
 ﻿using System.Diagnostics;
 using E_Learning_I3332.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace E_Learning_I3332.Controllers;
 
 public class HomeController : Controller
 {
+    [Authorize]
     public IActionResult Index()
     {
-        bool isAuthenticated = false;
-        if (!isAuthenticated)
-        {
-            return Redirect("~/authentication/login");
-        }
-        else
-        {
-            return View();
-        }
+        return View();
     }
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

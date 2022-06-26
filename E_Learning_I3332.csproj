@@ -5,8 +5,8 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
-<!-- 
-  <Target Name="Tailwind" BeforeTargets="Build">
+
+  <!-- <Target Name="Tailwind" BeforeTargets="Build">
       <Exec Command="npm run watch-tailwind"/>
   </Target> -->
 </Project>
