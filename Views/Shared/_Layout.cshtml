@@ -1,6 +1,15 @@
 ﻿@{
     var claimsIdentity = User.Identity as System.Security.Claims.ClaimsIdentity;
-    var email = claimsIdentity.FindFirst("email").Value;
+
+    var email = "";
+    if (claimsIdentity != null)
+    {
+        var c = claimsIdentity.FindFirst("email");
+        if(c != null) 
+        {
+            email = c.Value;
+        }
+    }
 }
 
 <!DOCTYPE html>

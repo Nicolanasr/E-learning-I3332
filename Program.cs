@@ -9,6 +9,9 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
     (options) =>
     {
         options.LoginPath = "/authentication/login";
+        options.ExpireTimeSpan = TimeSpan.FromDays(7);
+        options.Cookie.MaxAge = options.ExpireTimeSpan;
+        options.SlidingExpiration = true;
     }
 );
 
