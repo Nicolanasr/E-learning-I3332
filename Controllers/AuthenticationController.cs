@@ -1,3 +1,4 @@
+using System.Collections.Immutable;
 using System.Diagnostics;
 using System.Security.Claims;
 using E_Learning_I3332.Models;
@@ -5,11 +6,19 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace E_Learning_I3332.Controllers;
 
 public class AuthenticationController : Controller
 {
+    private readonly MySQLDBContext _db;
+    [ActivatorUtilitiesConstructorAttribute]
+    public AuthenticationController(MySQLDBContext db)
+    {
+        _db = db;
+    }
+
     public IActionResult Index()
     {
         return Redirect("~/authentication/login");
@@ -22,17 +31,42 @@ public class AuthenticationController : Controller
         return View();
     }
 
+    [Route("authentication/register")]
+    public IActionResult Register(string ReturnUrl)
+    {
+        TempData["ReturnUrl"] = ReturnUrl;
+        return View();
+    }
+
+    [Route("authentication/register")]
+    [HttpPost]
+    public IActionResult RegisterSave(Users user)
+    {
+        if (ModelState.IsValid)
+        {
+            _db.Add<Users>(user);
+            _db.SaveChanges();
+            return Redirect("/");
+        }
+
+        return View("register", user);
+    }
+
     [Route("authentication/login")]
     [HttpPost]
-    public async Task<IActionResult> LoginSave(string email, string ReturnUrl)
+    public async Task<IActionResult> LoginSave(Users user, string ReturnUrl)
     {
-        if (email == "nasr528@gmail.com")
+        Users userDb = _db.Users.FirstOrDefault(u => u.Email == user.Email && u.Password == user.Password);
+
+
+
+        if (userDb != null)
         {
             var claims = new List<Claim>
             {
-                new Claim("email", email),
-                new Claim(ClaimTypes.NameIdentifier, email),
-                new Claim("role", "1"),
+                new Claim("email", userDb.Email??""),
+                new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+                new Claim("role", user.Role.ToString()),
             };
 
             var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
@@ -43,8 +77,8 @@ public class AuthenticationController : Controller
         }
         else
         {
-            TempData["error"] = "user not found";
-            return View("~/Views/Authentication/login.cshtml");
+            TempData["error"] = "Email or password does not match!";
+            return View("login");
         }
     }
 

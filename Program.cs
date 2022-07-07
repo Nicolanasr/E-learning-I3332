@@ -1,10 +1,5 @@
-using dotnet;
 using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,7 +16,7 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
     }
 );
 
-builder.Services.AddDbContext<MySQLDBContext>(options =>
+builder.Services.AddDbContext<E_Learning_I3332.Models.MySQLDBContext>(options =>
     {
         var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
         options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
